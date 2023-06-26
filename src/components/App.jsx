@@ -3,6 +3,9 @@ import Form from './Form/Form';
 import Contacts from './Contacts/Contacts';
 import Input from './Input/Input';
 import Kek from './SeniorCodingExamples/SeniorCodingExamples';
+import { load, save } from '../components/utils/saveandload';
+
+const initialState = [];
 
 export class App extends Component {
   state = {
@@ -15,6 +18,19 @@ export class App extends Component {
     ],
     filter: '',
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    if (contacts !== prevState.contacts) {
+      save(contacts, 'contacts');
+    }
+  }
+
+  componentDidMount() {
+    const data = load('contacts') ?? initialState;
+
+    this.setState({ contacts: data });
+  }
 
   deleteItem = id => {
     this.setState(({ contacts }) => {
@@ -39,7 +55,7 @@ export class App extends Component {
         {
           name: name,
           tel: tel,
-          id: this.state.contacts[this.state.contacts.length - 1].id + 1,
+          id: name + tel,
         },
       ];
       return { contacts: newSt };

@@ -57,7 +57,7 @@ Contact.propTypes = {
   contacts: PropTypes.shape({
     name: PropTypes.string,
     tel: PropTypes.string,
-    id: PropTypes.number,
+    id: PropTypes.string,
   }),
   deleteItem: PropTypes.func,
 };
